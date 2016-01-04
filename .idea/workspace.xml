@@ -2,35 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49dd10b0-1cfe-43ef-8010-26489a8df0b5" name="Default" comment="">
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\fuser_config.json" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\ga.html" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\images\happy.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\images\icon.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\images\sad.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\images\splash.xcf" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\images\splash_iPad_landscape.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\images\splash_iPad_portrait.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\images\thinking.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\index.html" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\js\Board.js" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\js\Game.js" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\js\Player.js" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\js\ai-worker.js" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\js\interface.js" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\js\layout.js" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\js\storage.js" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\license.txt" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\style\images\ajax-loader.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\style\images\icons-18-black.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\style\images\icons-18-white.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\style\images\icons-36-black.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\style\images\icons-36-white.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\style\small-wood.jpg" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\style\style.css" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\style\w.min.css" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\style\wood.jpg" afterPath="" />
-      <change type="DELETED" beforePath="G:\HTML5-Gomoku\style\woodfloor.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.js" afterPath="$PROJECT_DIR$/index.js" />
     </list>
     <ignored path="HTML5-Gomoku.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,17 +28,17 @@
       <file leaf-file-name="settings.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://G:/html5-palette/settings.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="209">
+            <state vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="209">
               <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chat.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="chat.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/chat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6804657" vertical-offset="4813" max-vertical-offset="5624">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2634" max-vertical-offset="5624">
               <caret line="281" column="63" selection-start-line="281" selection-start-column="63" selection-end-line="281" selection-end-column="63" />
               <folding />
             </state>
@@ -76,18 +48,18 @@
       <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/style/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11153">
+            <state vertical-scroll-proportion="0.0" vertical-offset="171" max-vertical-offset="11153">
               <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="528" max-vertical-offset="1330">
-              <caret line="57" column="36" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.122897804" vertical-offset="0" max-vertical-offset="1330">
+              <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -96,7 +68,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.842105" vertical-offset="2631" max-vertical-offset="3363">
+            <state vertical-scroll-proportion="-33.285713" vertical-offset="2260" max-vertical-offset="3363">
               <caret line="168" column="12" selection-start-line="168" selection-start-column="12" selection-end-line="168" selection-end-column="12" />
               <folding />
             </state>
@@ -135,12 +107,13 @@
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/public/style/style.css" />
         <option value="$PROJECT_DIR$/public/js/chat.js" />
+        <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="300" />
-    <option name="y" value="23" />
+    <option name="x" value="131" />
+    <option name="y" value="29" />
     <option name="width" value="1595" />
     <option name="height" value="961" />
   </component>
@@ -170,7 +143,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -241,6 +213,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -249,14 +222,6 @@
     <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -267,14 +232,12 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="CucumberJavaScriptRunConfigurationType" factoryName="Cucumber.js">
-      <option name="cucumberJsArguments" />
-      <option name="executablePath" />
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
       <option name="filePath" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -282,6 +245,16 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="Chrome" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaScriptRunConfigurationType" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" />
+      <option name="executablePath" />
+      <option name="filePath" />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -305,8 +278,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="300" y="23" width="1595" height="961" extended-state="0" />
-    <editor active="false" />
+    <frame x="131" y="29" width="1595" height="961" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -320,11 +293,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -349,6 +322,54 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://G:/html5-palette/settings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="209">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4813" max-vertical-offset="5624">
+          <caret line="281" column="63" selection-start-line="281" selection-start-column="63" selection-end-line="281" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/style/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="171" max-vertical-offset="11153">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="528" max-vertical-offset="1330">
+          <caret line="57" column="36" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2631" max-vertical-offset="3363">
+          <caret line="168" column="12" selection-start-line="168" selection-start-column="12" selection-end-line="168" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/HTML5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="28952" max-vertical-offset="41553">
+          <caret line="1564" column="2" selection-start-line="1484" selection-start-column="2" selection-end-line="1564" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://G:/html5-palette/settings.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="209">
@@ -405,14 +426,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.842105" vertical-offset="2631" max-vertical-offset="3363">
-          <caret line="168" column="12" selection-start-line="168" selection-start-column="12" selection-end-line="168" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/style/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11153">
@@ -421,18 +434,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
+    <entry file="file://$PROJECT_DIR$/public/js/chat.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="528" max-vertical-offset="1330">
-          <caret line="57" column="36" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2634" max-vertical-offset="5624">
+          <caret line="281" column="63" selection-start-line="281" selection-start-column="63" selection-end-line="281" selection-end-column="63" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/chat.js">
+    <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6804657" vertical-offset="4813" max-vertical-offset="5624">
-          <caret line="281" column="63" selection-start-line="281" selection-start-column="63" selection-end-line="281" selection-end-column="63" />
+        <state vertical-scroll-proportion="-33.285713" vertical-offset="2260" max-vertical-offset="3363">
+          <caret line="168" column="12" selection-start-line="168" selection-start-column="12" selection-end-line="168" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.122897804" vertical-offset="0" max-vertical-offset="1330">
+          <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
           <folding />
         </state>
       </provider>
