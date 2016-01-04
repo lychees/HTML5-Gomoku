@@ -94,6 +94,10 @@
   text-align: center;
 }
 
+::-webkit-input-placeholder{
+    color: #111;
+}
+
 /* Messages */
 
 .chatArea {
