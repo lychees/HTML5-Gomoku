@@ -1,13 +1,25 @@
-# Gomoku (with AI!) written with HTML5 technology
 
-The game supports both mobile and desktop (heck, it can even be an iOS webapp).
+# Socket.IO Chat
 
-I use JQuery Mobile for the interface.
+A simple chat demo for socket.io
 
-The AI is based on the nega-scout framework, with same caching using JavaScript Object
-as a hash table. It runs parallel to the page using the HTML5 Web Worker.
+## How to use
 
-Other details can be found in my [blog post](http://yjyao.com/2012/06/gomoku-in-html5.html)
+```
+$ cd socket.io
+$ npm install
+$ cd examples/chat
+$ npm install
+$ node .
+```
 
-## License
-MIT
+And point your browser to `http://localhost:3000`. Optionally, specify
+a port by supplying the `PORT` env variable.
+
+## Features
+
+- Multiple users can join a chat room by each entering a unique username
+on website load.
+- Users can type chat messages to the chat room.
+- A notification is sent to all users when a user joins or leaves
+the chatroom.
