@@ -26,7 +26,9 @@ $(function() {
   var socket = io();
 
 
-
+  /*function getInitMessage(){
+    for (var i in data) addChatMessage(i);
+  }*/
 
   function addParticipantsMessage (data) {
     var message = '';
@@ -35,6 +37,8 @@ $(function() {
     } else {
       message += "当前有 " + data.numUsers + " 名玩家在线";
     }
+
+
     log(message);
   }
 
@@ -79,6 +83,9 @@ $(function() {
   // Adds the visual chat message to the message list
   function addChatMessage (data, options) {
     // Don't fade the message in if there is an 'X was typing'
+
+    //console.log(data); console.log(data.username);
+
     var $typingMessages = getTypingMessages(data);
     options = options || {};
     if ($typingMessages.length !== 0) {
@@ -236,6 +243,13 @@ $(function() {
       prepend: true
     });
     addParticipantsMessage(data);
+
+    console.log(data.msgs);
+    for (var i in data.msgs){
+      addChatMessage(data.msgs[i]);
+    }
+
+    //getInitMessage(data);
   });
 
   // Whenever the server emits 'new message', update the chat body

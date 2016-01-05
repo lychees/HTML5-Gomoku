@@ -17,6 +17,14 @@ $(document).ready(function(){
         gameData.net=$(this).val();
     });
 
+    $('#create-or-join-select input[type="radio"]').on('change', function(){
+        gameData.create_or_join=$(this).val();
+    });
+
+    $('#room-input input[type="text"]').on('change', function(){
+        gameData.room=$(this).val();
+    });
+
     $('#nickname-input input[type="text"]').on('change', function(){
         gameData.nickname=$(this).val();
     });

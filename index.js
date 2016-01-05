@@ -18,6 +18,7 @@ app.use(express.static(__dirname + '/public'));
 // Chatroom
 
 var numUsers = 0;
+var msgs = [];
 
 io.on('connection', function (socket) {
   var addedUser = false;
@@ -25,6 +26,17 @@ io.on('connection', function (socket) {
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
     // we tell the client to execute 'new message'
+
+    msgs.push({
+      username: socket.username,
+      message: data
+    });
+
+    /*if (msgs.length > 10){
+      message
+    }*/
+
+
     socket.broadcast.emit('new message', {
       username: socket.username,
       message: data
@@ -40,7 +52,8 @@ io.on('connection', function (socket) {
     ++numUsers;
     addedUser = true;
     socket.emit('login', {
-      numUsers: numUsers
+      numUsers: numUsers,
+      msgs: msgs
     });
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
