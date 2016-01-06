@@ -71,11 +71,12 @@ gameData.addRecord('create_or_join', 'create', function(val){
     $('#create-or-join-select input[type="radio"]').checkboxradio('refresh');
     refresh();
 });
-gameData.addRecord('room', "1", function(val){
+gameData.addRecord('room', "1000", function(val){
     $('#room-input input[type="text"]').val(val);
 });
 gameData.addRecord('nickname', "Noname", function(val){
     $('#nickname-input input[type="text"]').val(val);
+    setUsername("Noname");
 });
 
 
