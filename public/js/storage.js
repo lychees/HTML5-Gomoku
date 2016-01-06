@@ -76,7 +76,7 @@ gameData.addRecord('room', "1000", function(val){
 });
 gameData.addRecord('nickname', "Noname", function(val){
     $('#nickname-input input[type="text"]').val(val);
-    setUsername("Noname");
+    //setUsername("Noname");
 });
 
 

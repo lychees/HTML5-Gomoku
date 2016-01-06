@@ -1,4 +1,4 @@
 @echo off
-node .
+supervisor .
 pause
 
