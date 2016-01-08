@@ -32,65 +32,24 @@ HumanPlayer.prototype.myTurn = function(){
     }
 };
 
-function OnlineHumanPlayer(color, game){
+function LocalHumanPlayer(color, game){
     Player.call(this, color, game);
-    this.computing = false;
-    this.cancel = 0; //?
-    this.worker = new Worker('js/online-worker.js ');
-    var self = this;
-    this.worker.onmessage=function(e) {
-        switch (e.data.type) {
-            /*case 'error':
-             console.log(e.data.message);
-             break;*/
-            case 'decision':
-                self.computing = false;
-                if (self.cancel > 0) {
-                    self.cancel--;
-                } else {
-                    self.setGo(e.data.r, e.data.c);
-                }
-                break;
-            case 'starting':
-                self.computing = true;
-                break;
-            case 'alert':
-                alert(e.data.msg);
-                break;
-            default:
-                console.log(e.data);
-        }
-    }
-    this.worker.postMessage({
-        type: 'ini',
-        color: color
-    });
 }
-
-OnlineHumanPlayer.prototype = new Player();
-
-OnlineHumanPlayer.prototype.myTurn = function(){
+LocalHumanPlayer.prototype = new Player();
+LocalHumanPlayer.prototype.myTurn = function(){
     Player.prototype.myTurn.call(this);
-    this.game.toOthers();
-    gameInfo.setText("Thinking...");
-    gameInfo.setBlinking(true);
-    this.move();
 };
 
-OnlineHumanPlayer.prototype.watch = function(r, c, color){
-    this.worker.postMessage({
-        type: 'watch',
-        r: r,
-        c: c,
-        color: color
-    });
+function RemoteHumanPlayer(color, game){
+    Player.call(this, color, game);
+}
+RemoteHumanPlayer.prototype = new Player();
+RemoteHumanPlayer.prototype.myTurn = function(){
+    Player.prototype.myTurn.call(this);
 };
 
-OnlineHumanPlayer.prototype.move = function(){
-    this.worker.postMessage({
-        type: 'compute'
-    });
-};
+
+
 
 function AIPlayer(mode, color, game){
     Player.call(this, color, game);

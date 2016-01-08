@@ -408,6 +408,9 @@ function showWinDialog(game){
 
     // Whenever the server emits 'login', log the login message
     socket.on('login', function (data) {
+
+        console.log("your id is:" + data.id);
+
         gameData['id'] = data.id;
         connected = true;
         // Display the welcome message
@@ -445,10 +448,12 @@ function showWinDialog(game){
         //console.log(username);
 
         var id = gameData['id'];
+        console.log(id);
 
         if (id == data.room_owner) {
             game.mode = 'hvh';
-            game.init(new HumanPlayer("black"), new HumanPlayer("white"));
+            //game.init(new HumanPlayer("black"), new HumanPlayer("white"));
+            game.init(new LocalHumanPlayer("black"), new RemoteHumanPlayer("white"));
             $.mobile.changePage('#game-page');
             game.start();
             setTimeout(function () {
@@ -457,7 +462,8 @@ function showWinDialog(game){
         }
         else if (id == data.room_guest){
             game.mode = 'hvh';
-            game.init(new HumanPlayer("black"), new HumanPlayer("white"));
+            //game.init(new HumanPlayer("black"), new HumanPlayer("white"));
+            game.init(new RemoteHumanPlayer("black"), new LocalHumanPlayer("white"));
             $.mobile.changePage('#game-page');
             game.start();
             setTimeout(function () {
