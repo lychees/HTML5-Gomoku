@@ -1,4 +1,7 @@
-$(document).ready(function(){
+
+$(function(){
+
+//$(document).ready(function(){
     var game = new Game($(".go-board"), $(".board tbody"));
 
     var adjustSize = adjustSizeGen();
@@ -22,7 +25,7 @@ $(document).ready(function(){
     });
 
     $('#room-input input[type="text"]').on('change', function(){
-        gameData.room=$(this).val();
+        gameData.room_id=$(this).val();
     });
 
     $('#nickname-input input[type="text"]').on('change', function(){
@@ -52,7 +55,18 @@ $(document).ready(function(){
                 game.init(new HumanPlayer("black"), new HumanPlayer("white"));
             }
             else{
-                game.init(new HumanPlayer("black"), new HumanPlayer("white"));
+                if (gameData.create_or_join == 'create'){
+                    //console.log("!");
+                    var socket = io();
+                    socket.emit('create room');
+                }
+                else{
+                    var socket = io();
+                    //console.log(gameData.room_id);
+                    socket.emit('join room', gameData.room_id);
+                }
+                return;
+                //game.init(new HumanPlayer("black"), new HumanPlayer("white"));
             }
         }else{
             var color, other;
@@ -66,6 +80,7 @@ $(document).ready(function(){
             game.mode=gameData.level;
             game.init(new HumanPlayer(color), new AIPlayer(game.mode, other));
         }
+        game.init(new HumanPlayer("black"), new HumanPlayer("white"));
         $.mobile.changePage('#game-page');
         game.start();
         setTimeout(function(){$('.back-to-game').button('enable');},100);
@@ -133,7 +148,7 @@ $(document).ready(function(){
 
         return self;
     })();
-});
+//});
 
 function showWinDialog(game){
     gameInfo.setBlinking(false);
@@ -157,3 +172,4 @@ function showWinDialog(game){
         }
     }
 }
+});;

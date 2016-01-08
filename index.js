@@ -19,6 +19,7 @@ app.use(express.static(__dirname + '/public'));
 
 var numUsers = 0;
 var msgs = [];
+var rooms = {};
 
 io.on('connection', function (socket) {
   var addedUser = false;
@@ -42,6 +43,48 @@ io.on('connection', function (socket) {
       message: data
     });
   });
+
+    socket.on('create room', function(){
+        ///console.log("wow");\
+
+        var room_id = "1000";
+        rooms[room_id] = {
+            room_owner: socket.username
+        };
+
+        socket.broadcast.emit('create room', {
+            room_owner: socket.username,
+            room_id: room_id
+        });
+    });
+
+    socket.on('join room', function(room_id){
+
+        console.log(rooms);
+
+        if (rooms[room_id] == null) {
+            socket.emit('no room');
+        }
+        else{
+
+            io.emit('find room', {
+                room_owner: rooms[room_id].room_owner,
+                room_guest: socket.username,
+                room_id: room_id
+            });
+
+            /*socket.broadcast.emit('find room', {
+                room_owner: rooms[room_id].room_owner,
+                room_guest: socket.username,
+                room_id: room_id
+            });*/
+        }
+    });
+
+
+   socket.on('move', function(move){
+
+   });
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', function (username) {

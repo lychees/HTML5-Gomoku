@@ -1,98 +1,133 @@
-gameData={
-    prefix: 'yyjhao.gomoku.',
-    records: {},
-    addRecord: function(name, defaultVal,applyFunc){
-        this.records[name]=defaultVal;
-        var func;
-        if(!applyFunc){
-            func=function(){};
+$(function() {
+
+
+    var socket = io();
+
+
+    /*function getInitMessage(){
+     for (var i in data) addChatMessage(i);
+     }*/
+
+    function addParticipantsMessage (data) {
+        var message = '';
+        if (data.numUsers === 1) {
+            message += "当前有 1 名玩家在线";
+        } else {
+            message += "当前有 " + data.numUsers + " 名玩家在线";
         }
-        else{
-            func=applyFunc;
+        log(message);
+    }
+
+    // Sets the client's username
+    function setUsername(name) {
+        username = name;
+
+        // If the username is valid
+        if (username) {
+            //$loginPage.fadeOut();
+            //$chatPage.show();
+            //$loginPage.off('click');
+            //$currentInput = $inputMessage.focus();
+            // Tell the server your username
+            socket.emit('add user', username);
         }
-        Object.defineProperty(this, name, {
-            get: function(){
-                return localStorage[this.prefix+name];
-            },
-            set: function(val){                
-                localStorage[this.prefix+name] = val;
-                func(val);
+    }
+
+    gameData = {
+        prefix: 'yyjhao.gomoku.',
+        records: {},
+        addRecord: function (name, defaultVal, applyFunc) {
+            this.records[name] = defaultVal;
+            var func;
+            if (!applyFunc) {
+                func = function () {
+                };
             }
-        });
-    },
-    ini: function(){
-        for(var i in this.records){
-            this[i]=this.records[i];
-        }
-    },
-    apply: function(){
-        for (var i in this.records){
-            this[i]=this[i];
-        }
-    }
-};
-
-gameData.addRecord('firstTime','firstTime');
-
-function refresh(){
-    if(gameData['mode']=='vshuman'){
-        $('.vs-human').show();
-        if(gameData['net']=='online'){
-            $('.online').show();
-            if(gameData['create_or_join']=='create'){
-                $('.create').show();
-                $('.join').hide();
-            }else{
-                $('.join').show();
-                $('.create').hide();
+            else {
+                func = applyFunc;
             }
-        }else{
-            $('.online').hide();
+            Object.defineProperty(this, name, {
+                get: function () {
+                    return localStorage[this.prefix + name];
+                },
+                set: function (val) {
+                    localStorage[this.prefix + name] = val;
+                    func(val);
+                }
+            });
+        },
+        ini: function () {
+            for (var i in this.records) {
+                this[i] = this.records[i];
+            }
+        },
+        apply: function () {
+            for (var i in this.records) {
+                this[i] = this[i];
+            }
         }
-        $('.vs-computer').hide();
-    }else{
-        $('.vs-computer').show();
-        $('.vs-human').hide();
+    };
+
+    gameData.addRecord('firstTime', 'firstTime');
+
+    function refresh() {
+        if (gameData['mode'] == 'vshuman') {
+            $('.vs-human').show();
+            if (gameData['net'] == 'online') {
+                $('.online').show();
+                if (gameData['create_or_join'] == 'create') {
+                    $('.create').show();
+                    $('.join').hide();
+                } else {
+                    $('.join').show();
+                    $('.create').hide();
+                }
+            } else {
+                $('.online').hide();
+            }
+            $('.vs-computer').hide();
+        } else {
+            $('.vs-computer').show();
+            $('.vs-human').hide();
+        }
     }
-}
 
-gameData.addRecord('mode', 'vscomputer', function(val){
-    $('#mode-select input[value="'+val+'"]').attr('checked',true);
-    $('#mode-select input[type="radio"]').checkboxradio('refresh');
-    refresh();
-});
-gameData.addRecord('net', 'online', function(val){
-    $('#net-select input[value="'+val+'"]').attr('checked',true);
-    $('#net-select input[type="radio"]').checkboxradio('refresh');
-    refresh();
-});
-gameData.addRecord('create_or_join', 'create', function(val){
-    $('#create-or-join-select input[value="'+val+'"]').attr('checked',true);
-    $('#create-or-join-select input[type="radio"]').checkboxradio('refresh');
-    refresh();
-});
-gameData.addRecord('room', "1000", function(val){
-    $('#room-input input[type="text"]').val(val);
-});
-gameData.addRecord('nickname', "Noname", function(val){
-    $('#nickname-input input[type="text"]').val(val);
-    //setUsername("Noname");
-});
+    gameData.addRecord('mode', 'vscomputer', function (val) {
+        $('#mode-select input[value="' + val + '"]').attr('checked', true);
+        $('#mode-select input[type="radio"]').checkboxradio('refresh');
+        refresh();
+    });
+    gameData.addRecord('net', 'online', function (val) {
+        $('#net-select input[value="' + val + '"]').attr('checked', true);
+        $('#net-select input[type="radio"]').checkboxradio('refresh');
+        refresh();
+    });
+    gameData.addRecord('create_or_join', 'create', function (val) {
+        $('#create-or-join-select input[value="' + val + '"]').attr('checked', true);
+        $('#create-or-join-select input[type="radio"]').checkboxradio('refresh');
+        refresh();
+    });
+    gameData.addRecord('room_id', "1000", function (val) {
+        $('#room-input input[type="text"]').val(val);
+    });
+    gameData.addRecord('nickname', "Noname", function (val) {
+        $('#nickname-input input[type="text"]').val(val);
+        setUsername(val);
+    });
 
+    gameData.addRecord('color', 'black', function (val) {
+        $('#color-select input[value="' + val + '"]').attr('checked', true);
+        $('#color-select input[type="radio"]').checkboxradio('refresh');
+    });
+    gameData.addRecord('level', 'medium', function (val) {
+        $('#level-select input[value="' + val + '"]').attr('checked', true);
+        $('#level-select input[type="radio"]').checkboxradio('refresh');
+    });
 
-
-gameData.addRecord('color', 'black', function(val){
-    $('#color-select input[value="'+val+'"]').attr('checked',true);
-    $('#color-select input[type="radio"]').checkboxradio('refresh');
+    gameData.load = function () {
+        if (!this.firstTime) {
+            this.ini();
+        }
+        this.apply();
+    };
 });
-gameData.addRecord('level', 'medium', function(val){
-    $('#level-select input[value="'+val+'"]').attr('checked',true);
-    $('#level-select input[type="radio"]').checkboxradio('refresh');
-});
-
-gameData.load=function(){
-    if(!this.firstTime){
-        this.ini();
-    }
-    this.apply();
-};

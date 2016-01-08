@@ -252,7 +252,48 @@ $(function() {
     //getInitMessage(data);
   });
 
-  // Whenever the server emits 'new message', update the chat body
+   socket.on('create room', function (data) {
+     var message = '玩家 ';
+     message += data.room_owner;
+     message += ' 创建了编号为 ' + data.room_id +  ' 的房间';
+     log(message);
+   });
+
+    socket.on('find room', function (data) {
+        var message = '玩家 ';
+        message += data.room_guest;
+        message += ' 加入了编号为 ' + data.room_id +  ' 的房间';
+        log(message);
+
+        console.log(username);
+        username = gameData['nickname'];
+        console.log(username);
+
+        if (username == data.room_owner) {
+            var game = new Game($(".go-board"), $(".board tbody"));
+            game.init(new HumanPlayer("black"), new HumanPlayer("white"));
+            $.mobile.changePage('#game-page');
+            game.start();
+            setTimeout(function () {
+                $('.back-to-game').button('enable');
+            }, 100);
+        }
+        else if (username == data.room_guest){
+            var game = new Game($(".go-board"), $(".board tbody"));
+            game.init(new HumanPlayer("black"), new HumanPlayer("white"));
+            $.mobile.changePage('#game-page');
+            game.start();
+            setTimeout(function () {
+                $('.back-to-game').button('enable');
+            }, 100);
+        }
+    });
+
+    socket.on('no room', function () {
+        var message = '找不到编号为 '+ gameData.room_id  +  ' 的房间';
+        log(message);
+    });
+
   socket.on('new message', function (data) {
     addChatMessage(data);
   });
