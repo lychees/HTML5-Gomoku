@@ -66,6 +66,9 @@ io.on('connection', function (socket) {
     });
 
     socket.on('change nickname', function(id, nickname){
+
+        console.log(nickname);
+
         users[id] = {
             nickname: nickname
         }
