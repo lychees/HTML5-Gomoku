@@ -65,25 +65,30 @@ io.on('connection', function (socket) {
         }
     });
 
-    socket.on('change nickname', function(id, nickname){
-
+    socket.on('change nickname', function(nickname){
         console.log(nickname);
-
+        var id = socket.id;
         users[id] = {
             nickname: nickname
         }
+        socket.nickname = nickname;
     });
 
     socket.on('new message', function (data) {
+
+
+
         msgs.push({
-            username: socket.nickname,
+            nickname: socket.nickname,
+            id: socket.id,
             message: data
         });
         /*if (msgs.length > 10){
         message
         }*/
-        socket.broadcast.emit('new message', {
-            username: socket.nickname,
+        io.emit('new message', {
+            nickname: socket.nickname,
+            id: socket.id,
             message: data
         });
     });

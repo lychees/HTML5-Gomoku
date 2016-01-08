@@ -234,16 +234,18 @@ function showWinDialog(game){
         var message = $inputMessage.val();
         // Prevent markup from being injected into the message
         message = cleanInput(message);
+        console.log(message);
         // if there is a non-empty message and a socket connection
-        if (message && connected) {
+        //if (message && connected) {
             $inputMessage.val('');
-            addChatMessage({
-                username: username,
+            /*addChatMessage({
+                id: gameData['id'],
+                nickname: gameData['nickname'],
                 message: message
-            });
+            });*/
             // tell server to execute 'new message' and send along one parameter
             socket.emit('new message', message);
-        }
+        //}
     }
 
     // Log a message
@@ -265,15 +267,15 @@ function showWinDialog(game){
             $typingMessages.remove();
         }
 
-        var $usernameDiv = $('<span class="username"/>')
-            .text(data.username)
-            .css('color', getUsernameColor(data.username));
+        var $usernameDiv = $('<span class="nickname"/>')
+            .text(data.nickname)
+            .css('color', getUsernameColor(data.id));
         var $messageBodyDiv = $('<span class="messageBody">')
             .text(data.message);
 
         var typingClass = data.typing ? 'typing' : '';
         var $messageDiv = $('<li class="message"/>')
-            .data('username', data.username)
+            .data('username', data.nickname)
             .addClass(typingClass)
             .append($usernameDiv, $messageBodyDiv);
 
@@ -378,13 +380,18 @@ function showWinDialog(game){
         }
         // When the client hits ENTER on their keyboard
         if (event.which === 13) {
-            if (username) {
+
+            sendMessage();
+            socket.emit('stop typing');
+            typing = false;
+
+            /*if (username) {
                 sendMessage();
                 socket.emit('stop typing');
                 typing = false;
             } else {
                 //setUsername();
-            }
+            }*/
         }
     });
 

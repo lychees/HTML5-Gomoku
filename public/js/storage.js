@@ -19,18 +19,8 @@ $(function() {
     }
 
     // Sets the client's username
-    function setUsername(name) {
-        username = name;
-
-        // If the username is valid
-        if (username) {
-            //$loginPage.fadeOut();
-            //$chatPage.show();
-            //$loginPage.off('click');
-            //$currentInput = $inputMessage.focus();
-            // Tell the server your username
-            socket.emit('add user', username);
-        }
+    function setUsername(nickname) {
+        socket.emit('change nickname', nickname);
     }
 
     gameData = {
