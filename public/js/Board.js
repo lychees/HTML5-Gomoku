@@ -185,7 +185,13 @@ var Board = function(boardElm, backgroundElm){
     };
 
     this.getGameResult = function(r, c, lastColor){
+
+
+
         var n = colorToNum[lastColor];
+        console.log(lastColor);
+        console.log(n);
+
         if(map[n].some(function(e){
             return e[r][c] > 4;
         })){

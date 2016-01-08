@@ -20,6 +20,7 @@ var msgs = [];
 var rooms = {};
 var users = {};
 var users_n = 0;
+var room_n = 1000;
 
 
 //Object.prototype.length = function(){return Object.keys(this).length;};
@@ -76,8 +77,6 @@ io.on('connection', function (socket) {
 
     socket.on('new message', function (data) {
 
-
-
         msgs.push({
             nickname: socket.nickname,
             id: socket.id,
@@ -95,14 +94,17 @@ io.on('connection', function (socket) {
 
 
     socket.on('create room', function(){
-        var room_id = "1000";
+        var room_id = '' + room_n + '';
+
         rooms[room_id] = {
             room_owner: socket.id
         };
         io.emit('create room', {
-            room_owner: socket.nickname,
+            room_owner: socket.id,
+            room_owner_nickname: socket.nickname,
             room_id: room_id
         });
+        room_n++;
     });
     socket.on('join room', function(room_id){
         console.log(rooms);
@@ -111,6 +113,7 @@ io.on('connection', function (socket) {
             socket.emit('no room');
         }
         else{
+            rooms[room_id].room_guest = socket.id;
             io.emit('find room', {
                 room_owner: rooms[room_id].room_owner,
                 room_guest: socket.id,
@@ -119,7 +122,15 @@ io.on('connection', function (socket) {
             });
         }
     });
-    socket.on('move', function(move){
+    socket.on('move', function(data){
+        console.log(rooms[data.room_id]);
+        if (data.user_id == rooms[data.room_id].room_owner) {
+            data.user_id = rooms[data.room_id].room_guest;
+        }
+        else{
+            data.user_id = rooms[data.room_id].room_owner;
+        }
+        io.emit('move', data);
    });
 
 });

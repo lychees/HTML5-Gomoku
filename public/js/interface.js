@@ -1,6 +1,9 @@
 
 $(function(){
 
+    var user_id;
+    var room_id;
+
 //$(document).ready(function(){
     var game = new Game($(".go-board"), $(".board tbody"));
 
@@ -379,7 +382,7 @@ function showWinDialog(game){
             $currentInput.focus();
         }
         // When the client hits ENTER on their keyboard
-        if (event.which === 13) {
+        if (event.which === 13){
 
             sendMessage();
             socket.emit('stop typing');
@@ -417,8 +420,10 @@ function showWinDialog(game){
     socket.on('login', function (data) {
 
         console.log("your id is:" + data.id);
-
         gameData['id'] = data.id;
+
+        user_id = data.id;
+
         connected = true;
         // Display the welcome message
         var message = "";
@@ -436,8 +441,15 @@ function showWinDialog(game){
     });
 
     socket.on('create room', function (data) {
+
+        room_id = data.room_id;
+
+        if (data.room_owner == user_id){
+            alert("你创建了编号为" + data.room_id + '的房间');
+        }
+
         var message = '玩家 ';
-        message += data.room_owner;
+        message += data.room_owner_nickname;
         message += ' 创建了编号为 ' + data.room_id +  ' 的房间';
         log(message);
     });
@@ -445,16 +457,19 @@ function showWinDialog(game){
 
 
     socket.on('find room', function (data) {
+        room_id = data.room_id;
+
         var message = '玩家 ';
         message += data.room_guest_nickname;
         message += ' 加入了编号为 ' + data.room_id +  ' 的房间';
         log(message);
 
         //console.log(username);
-        var username = gameData['nickname'];
+        //var username = gameData['nickname'];
         //console.log(username);
 
-        var id = gameData['id'];
+        //var id = gameData['id']; //!
+        var id = user_id;
         console.log(id);
 
         if (id == data.room_owner) {
@@ -531,6 +546,336 @@ function showWinDialog(game){
     });
 
 
+    // ---------------- game.js
 
+    function Game(boardElm, boardBackgroundElm){
+        this.mode = "hvh";
+        this.rounds = 0;
+
+        var white, black,
+            playing = false,
+            history = [],
+            players = {},
+            currentColor = "black";
+
+        this.board = new Board(boardElm, boardBackgroundElm);
+
+        this.board.clicked = function(r, c){
+            console.log("!!!");
+            var p = players[currentColor];
+            if(p instanceof HumanPlayer){
+                p.setGo(r, c);
+            }
+        };
+
+        this.getCurrentPlayer = function(){
+            return players[currentColor];
+        };
+
+        this.setCurrentColor = function(color){
+            currentColor = color;
+        };
+
+        this.toHuman = function(color){
+            this.board.setClickable(true, color);
+        };
+
+        this.toOthers = function(){
+            this.board.setClickable(false);
+        };
+
+        this.update = function(r, c, color){
+            if(playing){
+                this.rounds++;
+                this.board.updateMap(r, c, color);
+                black.watch(r, c, color);
+                white.watch(r, c, color);
+                setTimeout(progress, 0);
+            }
+        };
+
+        function progress(){
+            if(currentColor === 'black'){
+                white.myTurn();
+            }else{
+                black.myTurn();
+            }
+        }
+
+        this.setGo = function(r, c){
+            this.segGo(r, c, currentColor);
+        };
+
+        this.setGo = function(r, c, color){
+            if(!playing || this.board.isSet(r, c))return false;
+            history.push({
+                r: r,
+                c: c,
+                color:color
+            });
+            this.board.highlight(r, c);
+            this.board.setGo(r, c, color);
+
+            var result = this.board.getGameResult(r, c, color);
+
+            if(result === "draw"){
+                this.draw();
+            }else if(result === "win"){
+                this.win();
+                this.board.winChange(r, c, color);
+            }else{
+                this.update(r, c, color);
+            }
+            return true;
+        };
+
+        this.undo = function(){
+            if(!playing){
+                if(!history.length)return;
+                var last = history.pop();
+                this.board.unsetGo(last.r,last.c);
+                white.watch(last.r,last.c,'remove');
+                black.watch(last.r,last.c,'remove');
+                return;
+            }
+            do{
+                if(!history.length)return;
+                var last = history.pop();
+                this.board.unsetGo(last.r,last.c);
+                white.watch(last.r,last.c,'remove');
+                black.watch(last.r,last.c,'remove');
+            }while(players[last.color] instanceof AIPlayer);
+            var last = history[history.length - 1];
+            if(history.length > 0) this.board.highlight(last.r, last.c);
+            else this.board.unHighlight();
+            players[last.color].other.myTurn();
+            for(var col in {'black':'','white':''}){
+                if(players[col] instanceof AIPlayer && players[col].computing){
+                    players[col].cancel++;
+                }
+            }
+        };
+
+        this.draw = function(){
+            playing = false;
+            this.board.setClickable(false);
+        };
+
+        this.win = function(){
+            playing = false;
+            this.board.setClickable(false);
+            showWinDialog(this);
+        };
+
+        this.init = function(player1, player2){
+            console.log(player1, player2);
+            this.rounds = 0;
+            history = [];
+            this.board.init();
+            players = {};
+            players[player1.color] = player1;
+            players[player2.color] = player2;
+            white = players['white'];
+            black = players['black'];
+            white.game = this;
+            black.game = this;
+            white.other = black;
+            black.other = white;
+            if(!(black instanceof HumanPlayer)){
+                this.board.setWarning(0, true);
+            }
+
+            if(!(white instanceof HumanPlayer)){
+                this.board.setWarning(1, true);
+            }
+        };
+
+        this.start = function(){
+            playing = true;
+            players.black.myTurn();
+        };
+    }
+
+    // --------- Player.js
+
+// Agents that represent either a player or an AI
+    function Player(color){
+        this.color = color;
+    }
+
+    Player.prototype.myTurn = function(){
+        this.game.setCurrentColor(this.color);
+        //game.setCurrentColor(this.color);
+        gameInfo.setText((function(string){
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        })(this.color)+"'s turn.");
+        gameInfo.setColor(this.color);
+        gameInfo.setBlinking(false);
+    };
+
+    Player.prototype.watch = function(){};
+
+    Player.prototype.setGo = function(r,c){
+        return this.game.setGo(r, c, this.color);
+    };
+
+    function HumanPlayer(color, game){
+        Player.call(this, color, game);
+    }
+
+    HumanPlayer.prototype = new Player();
+
+    HumanPlayer.prototype.myTurn = function(){
+        Player.prototype.myTurn.call(this);
+        this.game.toHuman(this.color);
+        if(this.other instanceof AIPlayer){
+            gameInfo.setText('Your turn');
+        }
+    };
+
+    function LocalHumanPlayer(color, game){
+        HumanPlayer.call(this, color, game);
+    }
+    LocalHumanPlayer.prototype = new HumanPlayer();
+    LocalHumanPlayer.prototype.myTurn = function(){
+        HumanPlayer.prototype.myTurn.call(this);
+        this.game.toHuman(this.color);
+        gameInfo.setText('Your turn');
+    };
+
+
+
+    function RemoteHumanPlayer(color, game){
+        HumanPlayer.call(this, color, game);
+    }
+    RemoteHumanPlayer.prototype = new HumanPlayer();
+    RemoteHumanPlayer.prototype.myTurn = function(){
+        HumanPlayer.prototype.myTurn.call(this);
+        this.game.toOthers();
+        gameInfo.setText("Thinking...");
+        gameInfo.setBlinking(true);
+        //this.move();
+    };
+
+
+    LocalHumanPlayer.prototype.setGo = function(r,c){
+        //console.log("set go: ", r, c);
+        log("你下了" + r + ' '+ c + '位置');
+        socket.emit('move', {
+            r: r,
+            c: c,
+            user_id: user_id,
+            room_id: room_id
+        });
+        return this.game.setGo(r, c, this.color);
+    };
+
+    RemoteHumanPlayer.prototype.setGo = function(r,c){
+        //console.log("set go: ", r, c);
+        //console.log(data);
+        log("你的对手下了" + r + ' '+ c + '位置');        ;
+        return this.game.setGo(r, c, this.color);
+    };
+
+    socket.on('move', function (data) {
+        if (data.user_id == user_id) {
+
+            console.log(data);
+
+            game.board.clicked(data.r, data.c);
+            //log(data.username + ' joined');
+            //addParticipantsMessage(data);
+            //game.board.clicked(data.r, data.c);
+            //game.setGo(data.r, data.c);
+        }
+
+    });
+
+
+    function AIPlayer(mode, color, game){
+        Player.call(this, color, game);
+        this.computing = false;
+        this.cancel = 0;
+        this.mode = mode;
+        this.worker = new Worker('js/ai-worker.js');
+        var self=this;
+        this.worker.onmessage=function(e){
+            switch(e.data.type){
+                /*case 'error':
+                 console.log(e.data.message);
+                 break;*/
+                case 'decision':
+                    self.computing=false;
+                    if(self.cancel>0){
+                        self.cancel--;
+                    }else{
+                        self.setGo(e.data.r,e.data.c);
+                    }
+                    break;
+                case 'starting':
+                    self.computing=true;
+                    break;
+                case 'alert':
+                    alert(e.data.msg);
+                    break;
+                default:
+                    console.log(e.data);
+            }
+        };
+        this.worker.postMessage({
+            type: 'ini',
+            color: color,
+            mode: mode
+        });
+    }
+
+    AIPlayer.prototype = new Player();
+
+    AIPlayer.prototype.myTurn = function(){
+        Player.prototype.myTurn.call(this);
+        this.game.toOthers();
+        gameInfo.setText("Thinking...");
+        gameInfo.setBlinking(true);
+        this.move();
+    };
+
+    AIPlayer.prototype.watch = function(r, c, color){
+        this.worker.postMessage({
+            type: 'watch',
+            r: r,
+            c: c,
+            color: color
+        });
+    };
+
+    AIPlayer.prototype.move = function(){
+        if(this.game.rounds === 0){
+            this.setGo(7, 7);
+        }else if(this.game.rounds === 1){
+            var moves=[
+                [6,6],
+                [6,7],
+                [6,8],
+                [7,6],
+                [7,7],
+                [7,8],
+                [8,6],
+                [8,7],
+                [8,8]
+            ];
+            while(true){
+                var ind=Math.floor(Math.random()*moves.length);
+                if(this.setGo(moves[ind][0], moves[ind][1])){
+                    return;
+                }else{
+                    moves.splice(ind,1);
+                }
+            }
+        }else{
+            this.worker.postMessage({
+                type: 'compute'
+            });
+        }
+    };
 
 });;
