@@ -114,6 +114,8 @@ $(function() {
         $('#nickname-input input[type="text"]').val(val);
         setUsername(val);
     });
+    gameData.addRecord('id', "----", function (val) {
+    });
 
     gameData.addRecord('color', 'black', function (val) {
         $('#color-select input[value="' + val + '"]').attr('checked', true);

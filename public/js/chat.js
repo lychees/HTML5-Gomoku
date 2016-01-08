@@ -45,15 +45,8 @@ $(function() {
   // Sets the client's username
   function setUsername(name) {
     username = name;
-
-    // If the username is valid
     if (username) {
-      //$loginPage.fadeOut();
-      //$chatPage.show();
-      //$loginPage.off('click');
-      //$currentInput = $inputMessage.focus();
-      // Tell the server your username
-      socket.emit('add user', username);
+      socket.emit('change nickname', username);
     }
   }
 
@@ -236,6 +229,7 @@ $(function() {
 
   // Whenever the server emits 'login', log the login message
   socket.on('login', function (data) {
+     gameData['id'] = data.id;
     connected = true;
     // Display the welcome message
     var message = "";
@@ -252,7 +246,7 @@ $(function() {
     //getInitMessage(data);
   });
 
-   socket.on('create room', function (data) {
+    socket.on('create room', function (data) {
      var message = '玩家 ';
      message += data.room_owner;
      message += ' 创建了编号为 ' + data.room_id +  ' 的房间';
@@ -261,7 +255,7 @@ $(function() {
 
     socket.on('find room', function (data) {
         var message = '玩家 ';
-        message += data.room_guest;
+        message += data.room_guest_nickname;
         message += ' 加入了编号为 ' + data.room_id +  ' 的房间';
         log(message);
 
@@ -269,8 +263,11 @@ $(function() {
         username = gameData['nickname'];
         console.log(username);
 
-        if (username == data.room_owner) {
+        var id = gameData['id'];
+
+        if (id == data.room_owner) {
             var game = new Game($(".go-board"), $(".board tbody"));
+            game.mode = 'hvh';
             game.init(new HumanPlayer("black"), new HumanPlayer("white"));
             $.mobile.changePage('#game-page');
             game.start();
@@ -278,8 +275,9 @@ $(function() {
                 $('.back-to-game').button('enable');
             }, 100);
         }
-        else if (username == data.room_guest){
+        else if (id == data.room_guest){
             var game = new Game($(".go-board"), $(".board tbody"));
+            game.mode = 'hvh';
             game.init(new HumanPlayer("black"), new HumanPlayer("white"));
             $.mobile.changePage('#game-page');
             game.start();
@@ -323,7 +321,7 @@ $(function() {
 
     $( document ).ready(function(){
 
-        setUsername("Noname");
+        socket.emit('add user', gameData.username);
 
         $('#chat-box-input').hover(function(){
                 $('#chat-box-area').show(300);

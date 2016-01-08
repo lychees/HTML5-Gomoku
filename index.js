@@ -6,8 +6,6 @@ var io = require('socket.io');
 var port = process.env.PORT || 2334;
 
 io = io.listen(server);
-
-
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
@@ -20,101 +18,100 @@ app.use(express.static(__dirname + '/public'));
 var numUsers = 0;
 var msgs = [];
 var rooms = {};
+var users = {};
+var users_n = 0;
+
+
+//Object.prototype.length = function(){return Object.keys(this).length;};
 
 io.on('connection', function (socket) {
-  var addedUser = false;
+    var addedUser = false;
 
-  // when the client emits 'new message', this listens and executes
-  socket.on('new message', function (data) {
-    // we tell the client to execute 'new message'
+    socket.on('add user', function (nickname) {
+        if (addedUser) return;
 
-    msgs.push({
-      username: socket.username,
-      message: data
-    });
-
-    /*if (msgs.length > 10){
-      message
-    }*/
+        // we store the username in the socket session for this client
 
 
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data
-    });
-  });
+        ++numUsers; addedUser = true;
+        var id = users_n++;
 
-    socket.on('create room', function(){
-        ///console.log("wow");\
+        socket.nickname = nickname;
+        socket.id = id;
 
-        var room_id = "1000";
-        rooms[room_id] = {
-            room_owner: socket.username
-        };
-
-        socket.broadcast.emit('create room', {
-            room_owner: socket.username,
-            room_id: room_id
+        users[id] = {
+            nickname: nickname
+        }
+        socket.emit('login', {
+            numUsers: numUsers,
+            msgs: msgs,
+            id: id
+        });
+        socket.broadcast.emit('user joined', {
+            username: nickname,
+            numUsers: numUsers
         });
     });
 
-    socket.on('join room', function(room_id){
+    // when the user disconnects.. perform this
+    socket.on('disconnect', function (){
+        if (addedUser) {
+            --numUsers;
+            // echo globally that this client has left
+            socket.broadcast.emit('user left', {
+                username: socket.nickname,
+                numUsers: numUsers
+            });
+        }
+    });
 
+    socket.on('change nickname', function(id, nickname){
+        users[id] = {
+            nickname: nickname
+        }
+    });
+
+    socket.on('new message', function (data) {
+        msgs.push({
+            username: socket.nickname,
+            message: data
+        });
+        /*if (msgs.length > 10){
+        message
+        }*/
+        socket.broadcast.emit('new message', {
+            username: socket.nickname,
+            message: data
+        });
+    });
+
+
+    socket.on('create room', function(){
+        var room_id = "1000";
+        rooms[room_id] = {
+            room_owner: socket.id
+        };
+        io.emit('create room', {
+            room_owner: socket.nickname,
+            room_id: room_id
+        });
+    });
+    socket.on('join room', function(room_id){
         console.log(rooms);
 
         if (rooms[room_id] == null) {
             socket.emit('no room');
         }
         else{
-
             io.emit('find room', {
                 room_owner: rooms[room_id].room_owner,
-                room_guest: socket.username,
+                room_guest: socket.id,
+                room_guest_nickname: socket.nickname,
                 room_id: room_id
             });
-
-            /*socket.broadcast.emit('find room', {
-                room_owner: rooms[room_id].room_owner,
-                room_guest: socket.username,
-                room_id: room_id
-            });*/
         }
     });
-
-
-   socket.on('move', function(move){
-
+    socket.on('move', function(move){
    });
 
-  // when the client emits 'add user', this listens and executes
-  socket.on('add user', function (username) {
-    if (addedUser) return;
-
-    // we store the username in the socket session for this client
-    socket.username = username;
-    ++numUsers;
-    addedUser = true;
-    socket.emit('login', {
-      numUsers: numUsers,
-      msgs: msgs
-    });
-    // echo globally (all clients) that a person has connected
-    socket.broadcast.emit('user joined', {
-      username: socket.username,
-      numUsers: numUsers
-    });
-  });
-
-  // when the user disconnects.. perform this
-  socket.on('disconnect', function () {
-    if (addedUser) {
-      --numUsers;
-
-      // echo globally that this client has left
-      socket.broadcast.emit('user left', {
-        username: socket.username,
-        numUsers: numUsers
-      });
-    }
-  });
 });
